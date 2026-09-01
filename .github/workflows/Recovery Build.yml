@@ -4,41 +4,41 @@ on:
   workflow_dispatch:
     inputs:
       MANIFEST_URL:
-        description: 'MANIFEST_URL (if want to use SSH keys, use git@github.com:XXXXX)'
+        https://github.com/minimal-manifest-twrp/platform_manifest_twrp_aosp
         required: true
         default: 'https://github.com/minimal-manifest-twrp/platform_manifest_twrp_aosp'
       MANIFEST_BRANCH:
-        description: 'MANIFEST_BRANCH'
+        description: twrp-12.1
         required: true
         default: 'twrp-12.1'
       DEVICE_TREE_URL:
-        description: 'DEVICE_TREE_URL (leave blank to use local motorola/kansas tree)'
+        description: 
         required: false
         default: ''
       DEVICE_TREE_BRANCH:
-        description: 'DEVICE_TREE_BRANCH'
+        description: main
         required: false
         default: 'main'
       DEVICE_PATH:
-        description: 'DEVICE_PATH'
+        description: device/motorola/kansas
         required: true
         default: 'device/motorola/kansas'
       COMMON_TREE_URL:
-        description: 'COMMON_TREE_URL (if no common tree, leave blank)'
+        description: 
         required: false
       COMMON_PATH:
-        description: 'COMMON_PATH (if no common tree, leave blank)'
+        description: 
         required: false
       DEVICE_NAME:
-        description: 'DEVICE_NAME'
+        description: kansas
         required: true
         default: 'kansas'
       MAKEFILE_NAME:
-        description: 'MAKEFILE_NAME'
+        description: twrp_kansas
         required: true
         default: 'twrp_kansas'
       BUILD_TARGET:
-        description: 'BUILD_TARGET'
+        description: recovery
         required: true
         default: 'recovery'
 
