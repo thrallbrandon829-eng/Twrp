@@ -45,7 +45,7 @@ jobs:
     - name: Install Repo Tool
       run: |
         mkdir -p ~/bin
-        curl https://googleapis.com > ~/bin/repo
+        curl https://githubusercontent.com > ~/bin/repo
         chmod a+x ~/bin/repo
         export PATH=~/bin:$PATH
 
