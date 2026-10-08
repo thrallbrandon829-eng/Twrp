@@ -44,7 +44,8 @@ jobs:
 
     - name: Initialize and Sync Minimal AOSP
       run: |
-        export PATH=~/bin:$PATH
+        export PATH=/usr/bin:$PATH
+        rm -rf workspace
         mkdir workspace
         cd workspace
         repo init -u https://github.com -b twrp-12.1
