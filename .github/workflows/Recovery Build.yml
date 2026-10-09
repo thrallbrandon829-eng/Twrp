@@ -1,4 +1,3 @@
-
 name: Recovery Build
 
 on:
@@ -22,11 +21,12 @@ jobs:
         git config --global user.email "thrallbrandon829-eng@github.com"
         git config --global color.ui false
         
+        rm -rf workspace
         mkdir -p workspace
         cd workspace
         
-        # Call the native ubuntu package tool directly with proper configuration flags
-        repo init --no-clone-bundle -u https://github.com/thrallbrandon829-eng/Twrp -b twrp-12.1
+        # Absolute clean manifest link block configuration
+        repo init --no-clone-bundle -u https://github.com -b twrp-12.1
         repo sync -c -j$(nproc --all) --force-sync --no-clone-bundle --no-tags --prune
 
     - name: Inject Personal Device Configs
