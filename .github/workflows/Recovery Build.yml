@@ -17,15 +17,18 @@ jobs:
 
     - name: Initialize and Sync Minimal AOSP
       run: |
+        # Set up hard explicit git configurations for the local workspace runner environment
         git config --global user.name "thrallbrandon829-eng"
         git config --global user.email "thrallbrandon829-eng@github.com"
         git config --global color.ui false
         
+        # Completely delete old workspace folders to force kill any cached environment strings
+        rm -rf workspace
         mkdir -p workspace
         cd workspace
         
-        # Removed the legacy --no-pager option to match older native system tools
-        repo init --no-clone-bundle -u https://github.com -b twrp-12.1
+        # Cleaned up syntax sequence explicitly separate for older strict native repo engines
+        repo init -u https://github.com -b twrp-12.1 --no-clone-bundle
         repo sync -c -j$(nproc --all) --force-sync --no-clone-bundle --no-tags --prune
 
     - name: Inject Personal Device Configs
