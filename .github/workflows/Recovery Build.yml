@@ -23,7 +23,7 @@ jobs:
         
         # Download a clean standalone repo script directly from Google to bypass the broken system utility
         mkdir -p ~/bin
-        curl https://googleapis.com > ~/bin/repo
+        curl https://githubusercontent.com > ~/bin/repo
         chmod a+x ~/bin/repo
         
         rm -rf workspace
