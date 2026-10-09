@@ -17,7 +17,11 @@ jobs:
 
     - name: Initialize and Sync Minimal AOSP
       run: |
-        # Use the local repo tool script we checked into the repo, bypassing curl lookups
+        # Configure completely automated git variables for the virtual system environment
+        git config --global user.name "thrallbrandon829-eng"
+        git config --global user.email "thrallbrandon829-eng@github.com"
+        git config --global color.ui false
+        
         mkdir -p ~/bin
         cp tools/repo ~/bin/repo
         chmod a+x ~/bin/repo
@@ -25,13 +29,19 @@ jobs:
         
         mkdir -p workspace
         cd workspace
-        python3 ~/bin/repo init --no-clone-bundle -u https://github.com -b twrp-12.1
-        python3 ~/bin/repo sync -c -j$(nproc --all) --force-sync --no-clone-bundle --no-tags
+        
+        # Force non-interactive absolute initialization
+        python3 ~/bin/repo init --no-clone-bundle --no-pager -u https://github.com -b twrp-12.1
+        
+        # Execute absolute force-sync sequence
+        python3 ~/bin/repo sync -c -j$(nproc --all) --force-sync --no-clone-bundle --no-tags --prune
 
     - name: Inject Personal Device Configs
       run: |
-        mkdir -p workspace/motorola/kansas
-        cp -r motorola/kansas/* workspace/motorola/kansas/
+        # Ensure target structures exist and drop your MediaTek parameters into place
+        mkdir -p workspace/device/motorola/kansas
+        cp -r motorola/kansas/* workspace/device/motorola/kansas/
+        
         mkdir -p workspace/vendor/motorola/kansas
         cp -r vendor/motorola/kansas/* workspace/vendor/motorola/kansas/
 
