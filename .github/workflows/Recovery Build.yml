@@ -24,8 +24,8 @@ jobs:
         mkdir -p workspace
         cd workspace
         
-        # Use the official Ubuntu native repo command directly
-        repo init --no-clone-bundle --no-pager -u https://github.com -b twrp-12.1
+        # Removed the legacy --no-pager option to match older native system tools
+        repo init --no-clone-bundle -u https://github.com -b twrp-12.1
         repo sync -c -j$(nproc --all) --force-sync --no-clone-bundle --no-tags --prune
 
     - name: Inject Personal Device Configs
