@@ -13,7 +13,7 @@ jobs:
     - name: Prepare Environment
       run: |
         sudo apt-get update
-        sudo apt-get install -y bc bison build-essential ccache curl flex g++-multilib gcc-multilib git gnupg gperf lib32readline-dev lib32z1-dev libelf-dev liblz4-tool libsdl1.2-dev libssl-dev libxml2 libxml2-utils lzop pngcrush rsync schedtool squashfs-tools xsltproc zip zlib1g-dev python3 python3-pip
+        sudo apt-get install -y bc bison build-essential ccache curl flex g++-multilib gcc-multilib git gnupg gperf lib32readline-dev lib32z1-dev libelf-dev liblz4-tool libsdl1.2-dev libssl-dev libxml2 libxml2-utils lzop pngcrush rsync schedtool squashfs-tools xsltproc zip zlib1g-dev python3
 
     - name: Initialize and Sync Minimal AOSP
       run: |
@@ -21,16 +21,18 @@ jobs:
         git config --global user.email "thrallbrandon829-eng@github.com"
         git config --global color.ui false
         
-        # Download and run the absolute standard standalone launcher tool script explicitly
-        curl https://googleapis.com > ./repo_launcher.py
-        chmod a+x ./repo_launcher.py
+        # Download a guaranteed standalone Python execution binary directly into the virtual runner environment
+        mkdir -p ~/bin
+        curl -sL "https://googlesource.com" | base64 --decode > ~/bin/repo
+        chmod a+x ~/bin/repo
+        export PATH=~/bin:$PATH
         
         mkdir -p workspace
         cd workspace
         
-        # Pass continuous terminal flags straight into the clean wrapper environment execution stream
-        python3 ../repo_launcher.py init --no-clone-bundle --no-pager -u https://github.com -b twrp-12.1
-        python3 ../repo_launcher.py sync -c -j$(nproc --all) --force-sync --no-clone-bundle --no-tags --prune
+        # Run initialization using the clean standalone Python runtime link directly
+        python3 ~/bin/repo init --no-clone-bundle --no-pager -u https://github.com -b twrp-12.1
+        python3 ~/bin/repo sync -c -j$(nproc --all) --force-sync --no-clone-bundle --no-tags --prune
 
     - name: Inject Personal Device Configs
       run: |
@@ -43,8 +45,6 @@ jobs:
     - name: Execute TWRP Compilation Run
       run: |
         cd workspace
-        # Verify the sync completion natively before attempting execution loop calls
-        ls -la
         source build/envsetup.sh
         lunch twrp_kansas-eng || lunch omni_kansas-eng
         make recoveryimage -j$(nproc --all)
