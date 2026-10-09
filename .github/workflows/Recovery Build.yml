@@ -24,7 +24,7 @@ jobs:
         
         # Download a clean standalone repo launcher to completely avoid the broken system tool
         mkdir -p ~/bin
-        curl https://googleapis.com > ~/bin/repo
+        curl https://githubusercontent.com > ~/bin/repo
         chmod a+x ~/bin/repo
         
         rm -rf workspace
